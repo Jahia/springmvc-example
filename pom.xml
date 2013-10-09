@@ -49,6 +49,13 @@
     <version>1.0-SNAPSHOT</version>
     <packaging>war</packaging>
     <description>This is a module that contains an example of how to implement a REST API using a Spring MVC controller</description>
+
+    <scm>
+        <connection>scm:git:git@github.com:Jahia/springmvc-example.git</connection>
+        <url>scm:git:git@github.com:Jahia/springmvc-example.git</url>
+        <developerConnection>scm:git:git@github.com:Jahia/springmvc-example.git</developerConnection>
+    </scm>
+
     <repositories>
         <repository>
             <id>jahia-public</id>
@@ -79,7 +86,18 @@
             </snapshots>
         </pluginRepository>
     </pluginRepositories>
-    
+
+    <distributionManagement>
+        <repository>
+            <id>jahia-community-releases</id>
+            <url>https://devtools.jahia.com/nexus/content/repositories/jahia-community-releases</url>
+        </repository>
+        <snapshotRepository>
+            <id>jahia-community-snapshots</id>
+            <url>https://devtools.jahia.com/nexus/content/repositories/jahia-community-snapshots</url>
+        </snapshotRepository>
+    </distributionManagement>
+
     <dependencies>
         <dependency>
             <groupId>org.jahia.server</groupId>
