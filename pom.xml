@@ -33,10 +33,7 @@
     for your use, please contact the sales department at sales@jahia.com.
 
 -->
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
-                      http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0                       http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <artifactId>jahia-modules</artifactId>
@@ -46,7 +43,7 @@
     <groupId>org.jahia.modules</groupId>
     <artifactId>springmvc-example</artifactId>
     <name>springmvc-example</name>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0</version>
     <packaging>war</packaging>
     <description>This is a module that contains an example of how to implement a REST API using a Spring MVC controller</description>
 
@@ -130,12 +127,12 @@
                         <manifestEntries>
 		                	<Implementation-Title>${project.name}</Implementation-Title>
 		                    <Implementation-Version>${project.version}</Implementation-Version>
-		                    <Implementation-Vendor></Implementation-Vendor>
-		                    <Implementation-Vendor-Id></Implementation-Vendor-Id>
-		                    <Implementation-URL></Implementation-URL>
+		                    <Implementation-Vendor />
+		                    <Implementation-Vendor-Id />
+		                    <Implementation-URL />
 		                    <Specification-Title>${project.name}</Specification-Title>
 		                    <Specification-Version>${project.version}</Specification-Version>
-		                    <Specification-Vendor></Specification-Vendor>
+		                    <Specification-Vendor />
                             <package-name>${project.name}</package-name>
                             <depends>Default Jahia Templates,Jahia Static Assets</depends>
                             <definitions>META-INF/definitions.cnd</definitions>
