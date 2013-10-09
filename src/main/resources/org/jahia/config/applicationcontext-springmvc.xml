@@ -17,8 +17,12 @@ http://www.springframework.org/schema/context/spring-context-3.0.xsd">
     <bean id="jacksonMessageConverter"
           class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter"></bean>
 
-    <!-- We have to reinclude the two following adapters since we modify the AnnotationMethodHandlerAdapter that is
-         also defined in the DispatcherServlet.properties file -->
+    <!--
+      We have to reinclude the two following adapters since we modify the AnnotationMethodHandlerAdapter that is
+      also defined in the DispatcherServlet.properties file. We remove the validator since Jahia 6.6.x uses an
+      older version of the hibernate-validator class that is not compatible. In future versions of Jahia this
+      will no longer be required.
+    -->
     <bean class="org.springframework.web.servlet.mvc.HttpRequestHandlerAdapter"/>
     <bean class="org.springframework.web.servlet.mvc.SimpleControllerHandlerAdapter"/>
     <bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
