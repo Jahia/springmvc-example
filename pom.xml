@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
 <!--
 
 
@@ -38,21 +39,18 @@
     <parent>
         <artifactId>jahia-modules</artifactId>
         <groupId>org.jahia.modules</groupId>
-        <version>6.6.1.0</version>
+        <version>6.7.0.0-SNAPSHOT</version>
     </parent>
-    <groupId>org.jahia.modules</groupId>
     <artifactId>springmvc-example</artifactId>
     <name>springmvc-example</name>
-    <version>1.1-SNAPSHOT</version>
-    <packaging>war</packaging>
+    <version>2.0-SNAPSHOT</version>
+    <packaging>bundle</packaging>
     <description>This is a module that contains an example of how to implement a REST API using a Spring MVC controller</description>
-
     <scm>
         <connection>scm:git:git@github.com:Jahia/springmvc-example.git</connection>
         <url>scm:git:git@github.com:Jahia/springmvc-example.git</url>
         <developerConnection>scm:git:git@github.com:Jahia/springmvc-example.git</developerConnection>
     </scm>
-
     <repositories>
         <repository>
             <id>jahia-public</id>
@@ -67,7 +65,6 @@
             </snapshots>
         </repository>
     </repositories>
-
     <pluginRepositories>
         <pluginRepository>
             <id>jahia-public</id>
@@ -83,7 +80,6 @@
             </snapshots>
         </pluginRepository>
     </pluginRepositories>
-
     <distributionManagement>
         <repository>
             <id>jahia-community-releases</id>
@@ -94,52 +90,47 @@
             <url>https://devtools.jahia.com/nexus/content/repositories/jahia-community-snapshots</url>
         </snapshotRepository>
     </distributionManagement>
-
     <dependencies>
         <dependency>
             <groupId>org.jahia.server</groupId>
             <artifactId>jahia-impl</artifactId>
-            <version>6.6.1.0</version>
+            <version>6.7.0.0-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
-
         <dependency>
             <groupId>org.codehaus.jackson</groupId>
             <artifactId>jackson-mapper-asl</artifactId>
             <version>1.9.3</version>
+            <scope>provided</scope>
         </dependency>
-
         <dependency>
-          <groupId>org.hibernate</groupId>
-          <artifactId>hibernate-validator-annotation-processor</artifactId>
-          <version>4.3.1.Final</version>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-validator-annotation-processor</artifactId>
+            <version>${hibernate.validator.version}</version>
         </dependency>
-
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-aspects</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
     </dependencies>
     <build>
         <plugins>
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-war-plugin</artifactId>
+                <groupId>org.apache.felix</groupId>
+                <artifactId>maven-bundle-plugin</artifactId>
+                <extensions>true</extensions>
                 <configuration>
-                    <failOnMissingWebXml>false</failOnMissingWebXml>
-                    <archive>
-                        <manifestEntries>
-		                	<Implementation-Title>${project.name}</Implementation-Title>
-		                    <Implementation-Version>${project.version}</Implementation-Version>
-		                    <Implementation-Vendor />
-		                    <Implementation-Vendor-Id />
-		                    <Implementation-URL />
-		                    <Specification-Title>${project.name}</Specification-Title>
-		                    <Specification-Version>${project.version}</Specification-Version>
-		                    <Specification-Vendor />
-                            <package-name>${project.name}</package-name>
-                            <depends>Default Jahia Templates,Jahia Static Assets</depends>
-                            <definitions>META-INF/definitions.cnd</definitions>
-                            <root-folder>${project.artifactId}</root-folder>
-                            <module-type>module</module-type>
-                        </manifestEntries>
-                    </archive>
+                    <instructions>
+                        <Jahia-Depends>default,assets</Jahia-Depends>
+                        <Import-Package>
+                            ${jahia.plugin.projectPackageImport},
+                            *
+                        </Import-Package>
+                        <Embed-Dependency>
+                            *;artifactId=spring-aspects;scope=compile; type=!pom; inline=false
+                        </Embed-Dependency>
+                    </instructions>
                 </configuration>
             </plugin>
         </plugins>
