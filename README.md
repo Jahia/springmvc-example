@@ -135,8 +135,8 @@ method parameter. So for example URLs such as these will match the URL mapping :
 
 but these will not:
 
-    http://localhost:8080/cms/hello/serge
-    http://localhost:8080/cms/hello/serge_huber
+    http://localhost:8080/cms/hello/serge/test
+    http://localhost:8080/cms/hello/ (this will actually map to the first method without parameters)
 
 As you can see, it becomes possible, just by adding annotations to methods, to map them to URLs and expose a piece of
 code using a simple REST API (provided of course you do your best to make the mappings conformant to REST principles).
