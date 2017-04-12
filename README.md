@@ -23,18 +23,15 @@ is on the class itself, simply indicating that the class is a Spring controller:
 This is all that is needed for Spring to recognize this class as a Spring MVC controller. Now let’s look at a
 method and its annotations:
 
-    @RequestMapping(method= RequestMethod.GET,value="/hello",headers="Accept=application/xml, application/json")
+    @RequestMapping(method= RequestMethod.GET,value="/hello",produces=MediaType.TEXT_PLAIN_VALUE)
     public @ResponseBody String getHello() {
         return "Hello World !";
     }
 
 Despite the simple Java code, the annotations are almost longer than the code itself. However they do a great deal
 for you such as mapping the method to the /hello URL path (paths are relative to the main Spring servlet, which in
-Jahia is mapped at /cms, so the full path to the method will be /cms/hello), specifying to which accept headers of
-type XML and JSON the method will respond, and providing a response body in the corresponding format. The latter is a
-very powerful feature, since it means that you don’t have to bother with the output format at all, Spring will
-automatically serialize the result of the method into the format depending on what the incoming HTTP request Accept
-header has specified.
+Jahia is mapped at /cms, so the full path to the method will be /cms/hello), specifying the output format. The latter 
+is a very powerful feature, since it means that you don’t have to bother with the output format at all.
 
 So in the above example, by accessing the following URL http://localhost:8080/cms/hello, you will get an answer
 that looks like this :
@@ -51,75 +48,32 @@ to be properly registered. Inside the XML Spring descriptor file we have the fol
            xmlns:context="http://www.springframework.org/schema/context"
            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
            xsi:schemaLocation="http://www.springframework.org/schema/beans
-    http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+    http://www.springframework.org/schema/beans/spring-beans.xsd
     http://www.springframework.org/schema/context
-    http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+    http://www.springframework.org/schema/context/spring-context.xsd">
         <context:annotation-config/>
         <context:spring-configured/>
         <context:component-scan base-package="org.jahia.modules.examples.springmvc"/>
-
-        <bean class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping">
+    
+        <bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping">
             <property name="order" value="0"/>
         </bean>
-
-        <bean id="jacksonMessageConverter"
-              class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter"></bean>
-
-        <!--
-          We have to reinclude the two following adapters since we modify the AnnotationMethodHandlerAdapter that is
-          also defined in the DispatcherServlet.properties file. We remove the validator since Jahia 6.6.x uses an
-          older version of the hibernate-validator class that is not compatible. In future versions of Jahia this
-          will no longer be required.
-        -->
-        <bean class="org.springframework.web.servlet.mvc.HttpRequestHandlerAdapter"/>
-        <bean class="org.springframework.web.servlet.mvc.SimpleControllerHandlerAdapter"/>
-        <bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
-            <property name="webBindingInitializer">
-                <bean class="org.springframework.web.bind.support.ConfigurableWebBindingInitializer">
-                    <!--property name="validator" ref="validator" /-->
-                </bean>
-            </property>
-            <property name="messageConverters">
-                <list>
-                    <bean class="org.springframework.http.converter.ByteArrayHttpMessageConverter"/>
-                    <bean class="org.springframework.http.converter.StringHttpMessageConverter"/>
-                    <bean class="org.springframework.http.converter.FormHttpMessageConverter"/>
-                    <bean class="org.springframework.http.converter.xml.SourceHttpMessageConverter"/>
-                    <ref bean="jacksonMessageConverter"/>
-                </list>
-            </property>
-        </bean>
-
-        <!--bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean" /-->
-        <bean id="conversion-service" class="org.springframework.format.support.FormattingConversionServiceFactoryBean"/>
-
+    
     </beans>
-
-Please note that this file has been truncated to only focus on the main important elements, but when testing or
-using as a basis for your own project you should use the file included in the full source code (see the bottom of
-the article for the URL to the source code).
 
 The first XML tag, called context:component-scan, is used to specify the base-package where to start scanning for
 annotations and look for any Spring-supported annotations, including the MVC controller declarations we use in this
 project. The second tag, called context:annotation-config is used to make sure that we initialize the default
 annotation handler in Spring.
 
-The rest of the Spring XML file is mostly there to make sure that the annotation handlers and mappers are configured
-in a way that is compatible with Jahia, and may be copied as-is in your project without you having to worry about
-modifying them. Since Spring beans wiring is common to the complete Spring runtime running in Jahia, it is necessary
-to make sure that beans are only wired once. It might therefore be interesting to specify the wiring for beans shared
-across all your modules within the context of a single module that you might think of as a parent or root module. On
-the other hand, the component-scan and annotation config will be needed for all your modules Spring descriptors.
-
-Now that this is all implemented and wired, all that is needed is to deploy your module to the
-WEB-INF/var/shared-modules directory using either the deployModule.sh/.bat script (only compatible with Tomcat), using
-a Maven jahia:deploy configuration, or simply copying it to the WEB-INF/var/shared_modules directory while Jahia is
-running and then  restart it to initialize the new controllers.
+Now that this is all implemented and wired, all that is needed is to deploy your module to the 
+digital-factory-data/modules directory or using the Administration UI to deploy or using a Maven jahia:deploy 
+configuration.
 
 The next step is actually using more complex methods to be able to not only generate responses but also to be able
 to use request parameters. Here is another method example that we will detail:
 
-    @RequestMapping(method= RequestMethod.GET,value="/hello/{world}",headers="Accept=application/xml, application/json")
+    @RequestMapping(method= RequestMethod.GET,value="/hello/{world}",produces=MediaType.TEXT_PLAIN_VALUE)
     public @ResponseBody String getHello(@PathVariable String world) {
         return "Hello " + world;
     }
@@ -154,7 +108,7 @@ Up until now, in the above examples, we have always generated simple string valu
 not really leveraging the power of the automatic serialization provided by Spring’s annotation handlers. So let’s
 now present a more complex method:
 
-    @RequestMapping(method= RequestMethod.GET,value="/complex",headers="Accept=application/xml, application/json")
+    @RequestMapping(method= RequestMethod.GET,value="/complex",produces=MediaType.APPLICATION_JSON_VALUE)
     public @ResponseBody ComplexResult getComplexResult() {
         return new ComplexResult("Serge", "Huber");
     }
