@@ -1,5 +1,6 @@
 package org.jahia.modules.examples.springmvc;
 
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,17 +32,17 @@ public class ExampleController {
         }
     }
 
-    @RequestMapping(method= RequestMethod.GET,value="/hello",headers="Accept=application/xml, application/json")
+    @RequestMapping(method= RequestMethod.GET,value="/hello",produces=MediaType.TEXT_PLAIN_VALUE)
     public @ResponseBody String getHello() {
         return "Hello World !";
     }
 
-    @RequestMapping(method= RequestMethod.GET,value="/hello/{world}",headers="Accept=application/xml, application/json")
+    @RequestMapping(method= RequestMethod.GET,value="/hello/{world}",produces=MediaType.TEXT_PLAIN_VALUE)
     public @ResponseBody String getHello(@PathVariable String world) {
         return "Hello " + world;
     }
 
-    @RequestMapping(method= RequestMethod.GET,value="/complex",headers="Accept=application/xml, application/json")
+    @RequestMapping(method= RequestMethod.GET,value="/complex",produces=MediaType.APPLICATION_JSON_VALUE)
     public @ResponseBody ComplexResult getComplexResult() {
         return new ComplexResult("Serge", "Huber");
     }

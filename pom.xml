@@ -39,7 +39,7 @@
     <parent>
         <artifactId>jahia-modules</artifactId>
         <groupId>org.jahia.modules</groupId>
-        <version>6.7.0.0-SNAPSHOT</version>
+        <version>7.1.0.0</version>
     </parent>
     <artifactId>springmvc-example</artifactId>
     <name>springmvc-example</name>
@@ -97,25 +97,4 @@
             <version>${spring.version}</version>
         </dependency>
     </dependencies>
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.felix</groupId>
-                <artifactId>maven-bundle-plugin</artifactId>
-                <extensions>true</extensions>
-                <configuration>
-                    <instructions>
-                        <Jahia-Depends>default,assets</Jahia-Depends>
-                        <Import-Package>
-                            ${jahia.plugin.projectPackageImport},
-                            *
-                        </Import-Package>
-                        <Embed-Dependency>
-                            *;artifactId=spring-aspects;scope=compile; type=!pom; inline=false
-                        </Embed-Dependency>
-                    </instructions>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
 </project>
