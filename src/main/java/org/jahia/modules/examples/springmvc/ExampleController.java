@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 public class ExampleController {
-
+    
     public class ComplexResult {
         private String firstName;
         private String lastName;
@@ -45,6 +45,11 @@ public class ExampleController {
     @RequestMapping(method= RequestMethod.GET,value="/complex",produces=MediaType.APPLICATION_JSON_VALUE)
     public @ResponseBody ComplexResult getComplexResult() {
         return new ComplexResult("Serge", "Huber");
+    }
+    
+    @RequestMapping(method= RequestMethod.POST,value="/vulnerable",produces=MediaType.TEXT_PLAIN_VALUE)
+    public @ResponseBody String vulnerable(Example model) {
+        return "If using JDK >=9 and not spring-beans-3.2.18.jahia1_OSGI.jar you might have been potentially hacked with a crafted request";
     }
 
 }
