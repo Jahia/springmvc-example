@@ -39,11 +39,11 @@
     <parent>
         <artifactId>jahia-modules</artifactId>
         <groupId>org.jahia.modules</groupId>
-        <version>7.1.0.0</version>
+        <version>8.0.0.0</version>
     </parent>
     <artifactId>springmvc-example</artifactId>
     <name>springmvc-example</name>
-    <version>2.0-SNAPSHOT</version>
+    <version>3.0-SNAPSHOT</version>
     <packaging>bundle</packaging>
     <description>This is a module that contains an example of how to implement a REST API using a Spring MVC controller</description>
     <scm>
@@ -51,6 +51,10 @@
         <url>scm:git:git@github.com:Jahia/springmvc-example.git</url>
         <developerConnection>scm:git:git@github.com:Jahia/springmvc-example.git</developerConnection>
     </scm>
+    <properties>
+        <require-capability>osgi.extender;filter:="(osgi.extender=org.jahia.bundles.blueprint.extender.config)"</require-capability>
+        <jahia-module-signature>MC0CFD7N/Zdp57hKsmsUsfP5pZwL9AzyAhUAkzT3g3ZTZ49wexNERVBT99gEcTI=</jahia-module-signature>
+    </properties>
     <repositories>
         <repository>
             <id>jahia-public</id>
