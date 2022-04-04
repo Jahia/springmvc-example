@@ -33,3 +33,4 @@ jobs:
       - uses: jahia/jahia-modules-action/build@v1
         with:
           module_id: springmvc-example
+          mvn_settings_filepath: './github/maven.settings.xml'

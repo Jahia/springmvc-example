@@ -43,6 +43,7 @@ jobs:
           github_api_token: ${{ secrets.GH_API_TOKEN }}
           nexus_username: ${{ secrets.NEXUS_USERNAME }}
           nexus_password: ${{ secrets.NEXUS_PASSWORD }}
+          mvn_settings_filepath: './github/maven.settings.xml'
 
       - uses: jahia/jahia-modules-action/update-signature@v1
         with:
@@ -50,14 +51,6 @@ jobs:
           nexus_password: ${{ secrets.NEXUS_PASSWORD }}
           nexus_enterprise_releases_url: ${{ secrets.NEXUS_ENTERPRISE_RELEASES_URL }}
           force_signature: true
-
-      - uses: jahia/jahia-modules-action/release-publication@v1
-        name: Publish Module
-        with:
-          module_id: springmvc-example
-          release_version: ${{ github.event.release.tag_name }}
-          nexus_username: ${{ secrets.NEXUS_USERNAME }}
-          nexus_password: ${{ secrets.NEXUS_PASSWORD }}
 
       # Tmate only starts if any of the previous steps fails.
       # Be careful since it also means that if a step fails the workflow will
